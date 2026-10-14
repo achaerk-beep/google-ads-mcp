@@ -1,0 +1,677 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--
+  ====================================================================
+  TEMPLATE DE PRODUTO — duplicar por oferta em /{{PRODUTO_SLUG}}
+  ====================================================================
+  TROCAR POR PRODUTO (buscar por "{{" no arquivo):
+    {{PRODUTO_NOME}}        nome do produto
+    {{PRODUTO_SLUG}}        slug da URL (ex.: escova-secadora)
+    {{HEADLINE_BENEFICIO}}  headline em voz ativa (sem alegação médica,
+                            milagrosa ou garantia de resultado)
+    {{IMG_PRODUTO}}         caminho/URL da imagem do produto (foto real)
+    {{PRECO_DE}}            preço "de" — SÓ se for um preço real praticado
+                            antes; se não houver, apagar o elemento .preco-de
+    {{PRECO_POR}}           preço real de checkout (ex.: R$ 197,00)
+    {{BENEFICIO_1..4}}      benefícios concretos e verificáveis
+    {{FAQ_1..3}}            {{FAQ_n_PERGUNTA}} e {{FAQ_n_RESPOSTA}}
+    WHATSAPP_NUMBER         constante JS no fim do arquivo (só existe no
+                            código; NUNCA é impressa na página)
+
+  COMPLIANCE DE COPY (não negociável):
+    - nenhuma alegação médica, "milagrosa" ou garantia de resultado;
+    - nenhuma prova social inventada (depoimento/avaliação só se real);
+    - urgência só se real (estoque/prazo de fato) — ver bloco comentado;
+    - preços sempre do checkout real, nunca inventados.
+
+  CNPJ/razão social e WhatsApp não aparecem em texto visível (decisão
+  da cliente). O CNPJ segue obrigatório por lei para operar e faturar.
+-->
+<title>{{PRODUTO_NOME}} — pague só na entrega</title>
+<meta name="description" content="{{PRODUTO_NOME}} com pagamento na entrega: faça o pedido sem cartão e pague só quando receber.">
+<link rel="canonical" href="https://pago-na-entrega.com/{{PRODUTO_SLUG}}">
+<meta name="theme-color" content="#1C2E1F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --papel: #F7F1E4;
+    --papel-claro: #FFFDF8;
+    --tinta: #1C2E1F;
+    --tinta-suave: #2C4530;
+    --carimbo: #B23A2E;
+    --carimbo-escuro: #8F2C22;
+    --kraft: #C9A979;
+    --aprovado: #3F6B4A;
+    --texto-sec: #4A5A4C;
+    --borda: rgba(201, 169, 121, .55);
+    --titulo: "Archivo", "Arial Black", system-ui, sans-serif;
+    --corpo: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --largura: 1120px;
+    --gutter: 20px;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--papel);
+    color: var(--tinta);
+    font: 400 1.0625rem/1.6 var(--corpo);
+    -webkit-font-smoothing: antialiased;
+  }
+  img, svg { max-width: 100%; display: block; }
+  a { color: inherit; }
+  h1, h2, h3 { font-family: var(--titulo); line-height: 1.08; margin: 0; letter-spacing: -0.01em; }
+  p { margin: 0; }
+  .envelope { width: 100%; max-width: var(--largura); margin: 0 auto; padding: 0 var(--gutter); }
+  :focus-visible { outline: 3px solid var(--carimbo); outline-offset: 3px; }
+
+  /* ---------- Faixa de confiança ---------- */
+  .confianca { background: var(--tinta); color: var(--papel); font-size: .92rem; font-weight: 600; }
+  .confianca ul { list-style: none; margin: 0 auto; padding: 9px var(--gutter); max-width: var(--largura); display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 22px; }
+  .confianca li { display: inline-flex; align-items: center; gap: 7px; }
+  .confianca svg { width: 16px; height: 16px; color: #9CC2A5; }
+
+  /* Marca discreta (não é menu): mantém ligação com a home institucional */
+  .topo { padding: 14px 0; border-bottom: 1px solid var(--borda); }
+  .marca { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; font: 800 1.05rem/1 var(--titulo); letter-spacing: -0.02em; }
+  .marca svg { width: 30px; height: 30px; color: var(--carimbo); }
+  .marca em { font-style: normal; color: var(--carimbo); }
+
+  /* ---------- Botões ---------- */
+  .botao {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 54px; padding: 15px 28px;
+    background: var(--carimbo); color: #fff;
+    font: 800 1.125rem/1.1 var(--titulo); text-decoration: none;
+    border: 0; border-radius: 6px; cursor: pointer;
+    box-shadow: 0 3px 0 var(--carimbo-escuro);
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  }
+  .botao:hover { background: #A5342A; }
+  .botao:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--carimbo-escuro); }
+  .botao[disabled] { opacity: .65; cursor: progress; }
+  .botao-largo { width: 100%; }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 24px 0 48px; }
+  .hero .envelope { display: grid; gap: 26px; }
+  .foto { position: relative; margin: 0; background: var(--papel-claro); border: 1px solid var(--borda); border-radius: 10px; overflow: visible; }
+  .foto img { width: 100%; aspect-ratio: 1 / 1; object-fit: contain; border-radius: 10px; }
+  .foto .selo-canto { position: absolute; right: -8px; top: -12px; width: 88px; height: 88px; color: var(--carimbo); transform: rotate(10deg); }
+  .hero .envelope > * { min-width: 0; }
+  .hero h1, .produto-nome, .preco-por, .resumo strong { overflow-wrap: anywhere; }
+  .hero h1 { font-size: clamp(2rem, 7.5vw, 3.25rem); font-weight: 900; letter-spacing: -0.03em; }
+  .produto-nome { color: var(--carimbo); font-weight: 700; margin-bottom: 10px; }
+  .preco { margin-top: 22px; padding: 18px 0; border-top: 1px solid var(--borda); border-bottom: 1px solid var(--borda); display: grid; gap: 2px; }
+  .preco-de { color: var(--texto-sec); font-size: 1rem; }
+  .preco-de s { text-decoration-thickness: 1.5px; }
+  .preco-por { font: 900 clamp(2.1rem, 8vw, 2.75rem)/1.05 var(--titulo); letter-spacing: -0.02em; }
+  .preco-nota { font-weight: 600; color: var(--aprovado); }
+  .confirmacao { margin: 16px 0 20px; color: var(--texto-sec); }
+
+  /* ---------- Seções ---------- */
+  .secao { padding: 60px 0; }
+  .secao-titulo { font-size: clamp(1.75rem, 6vw, 2.5rem); font-weight: 800; letter-spacing: -0.025em; }
+  .secao-intro { margin-top: 12px; color: var(--texto-sec); font-size: 1.1rem; max-width: 38em; }
+  .divisa { border: 0; border-top: 1px solid var(--borda); margin: 0; }
+
+  /* ---------- Benefícios (lista editorial com check) ---------- */
+  .beneficios { list-style: none; margin: 28px 0 0; padding: 0; border-top: 1px solid var(--borda); max-width: 46em; }
+  .beneficios li { display: grid; grid-template-columns: 28px 1fr; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--borda); font-size: 1.125rem; }
+  .beneficios svg { width: 26px; height: 26px; color: var(--aprovado); margin-top: 1px; }
+
+  /* ---------- Trilha "Como funciona" ---------- */
+  .trilha { list-style: none; margin: 36px 0 0; padding: 0; display: grid; counter-reset: passo; }
+  .trilha li { position: relative; padding: 0 0 30px 64px; counter-increment: passo; }
+  .trilha li:last-child { padding-bottom: 0; }
+  .trilha li::before {
+    content: counter(passo);
+    position: absolute; left: 0; top: -2px;
+    width: 44px; height: 44px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--papel); border: 2px solid var(--tinta);
+    font: 900 1.2rem/1 var(--titulo); color: var(--tinta); z-index: 1;
+  }
+  .trilha li:last-child::before { background: var(--aprovado); border-color: var(--aprovado); color: #fff; }
+  .trilha li::after { content: ""; position: absolute; left: 21px; top: 44px; bottom: 0; border-left: 2px dashed var(--kraft); }
+  .trilha li:last-child::after { display: none; }
+  .trilha h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 4px; }
+  .trilha p { color: var(--texto-sec); }
+
+  /* ---------- Garantia ---------- */
+  .garantia { background: var(--tinta); color: var(--papel); }
+  .garantia .envelope { display: grid; gap: 24px; align-items: center; }
+  .garantia .selo-garantia { width: 116px; height: 116px; color: #E2735F; transform: rotate(8deg); }
+  .garantia h2 { color: var(--papel-claro); }
+  .garantia p { color: #CFD8CC; font-size: 1.1rem; max-width: 36em; }
+  .garantia p + p { margin-top: 12px; }
+  .garantia strong { color: var(--papel-claro); }
+
+  /* ---------- Formulário ---------- */
+  .pedido-caixa { background: var(--papel-claro); border: 1px solid var(--borda); border-top: 5px solid var(--carimbo); border-radius: 10px; padding: 24px 18px; margin-top: 28px; max-width: 640px; }
+  .resumo { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; padding-bottom: 16px; margin-bottom: 18px; border-bottom: 1px dashed var(--kraft); }
+  .resumo strong { font: 800 1.1rem/1.2 var(--titulo); }
+  .resumo span { font: 900 1.25rem/1 var(--titulo); white-space: nowrap; }
+  .campos { display: grid; gap: 16px; }
+  .linha-2 { display: grid; gap: 16px; grid-template-columns: 1fr 96px; }
+  .campo label { display: block; font-weight: 700; margin-bottom: 6px; }
+  .campo .dica { font-weight: 400; color: var(--texto-sec); font-size: .92rem; }
+  .campo input, .campo select {
+    width: 100%; min-height: 50px; padding: 12px 14px;
+    font: 400 1.0625rem/1.3 var(--corpo); color: var(--tinta);
+    background: #fff; border: 1.5px solid #B9A684; border-radius: 6px;
+    appearance: none; -webkit-appearance: none;
+  }
+  .campo select { background-image: linear-gradient(45deg, transparent 50%, var(--tinta) 50%), linear-gradient(135deg, var(--tinta) 50%, transparent 50%); background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%; background-size: 6px 6px; background-repeat: no-repeat; padding-right: 36px; }
+  .campo input:focus, .campo select:focus { outline: none; border-color: var(--tinta); box-shadow: 0 0 0 3px rgba(28, 46, 31, .15); }
+  .campo [aria-invalid="true"] { border-color: var(--carimbo); background: #FFF6F4; }
+  .erro { display: block; color: var(--carimbo); font-weight: 600; font-size: .92rem; margin-top: 5px; min-height: 0; }
+  .erro:empty { display: none; }
+  .armadilha { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .form-nota { margin-top: 14px; font-size: .95rem; color: var(--texto-sec); text-align: center; }
+  .enviado { display: none; text-align: center; padding: 10px 0; }
+  .enviado svg { width: 84px; height: 84px; margin: 0 auto 14px; color: var(--aprovado); }
+  .enviado h3 { font-size: 1.5rem; margin-bottom: 8px; }
+  .enviado p { color: var(--texto-sec); }
+  .enviado a { font-weight: 700; color: var(--carimbo); }
+  .pedido-caixa.ok form { display: none; }
+  .pedido-caixa.ok .enviado { display: block; }
+
+  /* ---------- FAQ ---------- */
+  .faq { margin-top: 28px; border-top: 1px solid var(--borda); }
+  .faq details { border-bottom: 1px solid var(--borda); }
+  .faq summary { list-style: none; cursor: pointer; padding: 20px 40px 20px 0; position: relative; font: 700 1.125rem/1.35 var(--titulo); }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: ""; position: absolute; right: 6px; top: 50%; width: 12px; height: 12px;
+    border-right: 2.5px solid var(--carimbo); border-bottom: 2.5px solid var(--carimbo);
+    transform: translateY(-70%) rotate(45deg); transition: transform .2s ease;
+  }
+  .faq details[open] summary::after { transform: translateY(-25%) rotate(-135deg); }
+  .faq .resposta { padding: 0 0 22px; color: var(--texto-sec); max-width: 44em; }
+
+  /* ---------- Rodapé ---------- */
+  .rodape { padding: 40px 0 48px; border-top: 1px solid var(--borda); font-size: .95rem; color: var(--texto-sec); }
+  .rodape .envelope { display: grid; gap: 18px; }
+  .rodape nav { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+  .rodape nav a { font-weight: 600; color: var(--tinta); }
+  .rodape small { font-size: .9rem; display: block; max-width: 46em; }
+
+  /* ---------- Desktop ---------- */
+  @media (min-width: 860px) {
+    :root { --gutter: 32px; }
+    .hero { padding: 48px 0 80px; }
+    .hero .envelope { grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+    .foto .selo-canto { width: 112px; height: 112px; right: -26px; top: -26px; }
+    .secao { padding: 88px 0; }
+    .trilha { grid-template-columns: repeat(4, 1fr); gap: 28px; }
+    .trilha li { padding: 64px 0 0; }
+    .trilha li::before { top: 0; left: 0; }
+    .trilha li::after { left: 44px; right: -28px; top: 21px; bottom: auto; border-left: 0; border-top: 2px dashed var(--kraft); }
+    .garantia .envelope { grid-template-columns: auto 1fr; gap: 48px; }
+    .garantia .selo-garantia { width: 144px; height: 144px; }
+    .pedido-caixa { padding: 32px; }
+    .linha-2.cidade { grid-template-columns: 1fr 120px; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="tinta-irregular" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="ruido"/>
+      <feDisplacementMap in="SourceGraphic" in2="ruido" scale="2.4"/>
+    </filter>
+    <path id="anel-texto" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/>
+  </defs>
+  <!-- Carimbo grande: só na seção de garantia -->
+  <symbol id="carimbo" viewBox="0 0 200 200">
+    <g filter="url(#tinta-irregular)" fill="none" stroke="currentColor">
+      <circle cx="100" cy="100" r="94" stroke-width="5"/>
+      <circle cx="100" cy="100" r="66" stroke-width="2"/>
+      <text font-family="Archivo, sans-serif" font-weight="800" font-size="17" fill="currentColor" stroke="none" letter-spacing="3.55">
+        <textPath href="#anel-texto">pague só na entrega ★ entrega nacional ★</textPath>
+      </text>
+      <path d="M70 102 l20 20 l40 -44" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </symbol>
+  <!-- Selo pequeno "só na entrega": canto da foto do produto -->
+  <symbol id="selo-entrega" viewBox="0 0 200 200">
+    <g filter="url(#tinta-irregular)" fill="currentColor" stroke="currentColor">
+      <circle cx="100" cy="100" r="94" fill="#FFFDF8" stroke-width="6"/>
+      <circle cx="100" cy="100" r="80" fill="none" stroke-width="2"/>
+      <text x="100" y="92" text-anchor="middle" stroke="none" font-family="Archivo, sans-serif" font-weight="900" font-size="34">só na</text>
+      <text x="100" y="128" text-anchor="middle" stroke="none" font-family="Archivo, sans-serif" font-weight="900" font-size="34">entrega</text>
+      <path d="M84 146 l10 10 l22 -24" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </symbol>
+  <symbol id="carimbo-mini" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" filter="url(#tinta-irregular)">
+      <circle cx="20" cy="20" r="17.5" stroke-width="2.5"/>
+      <circle cx="20" cy="20" r="13" stroke-width="1"/>
+      <path d="M13.5 20.5 l4.5 4.5 l8.5 -9.5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </symbol>
+  <symbol id="check" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    <path d="M7.5 12.4 l3 3 l6 -6.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+</svg>
+
+<!-- Faixa de confiança -->
+<div class="confianca">
+  <ul>
+    <li><svg aria-hidden="true"><use href="#check"/></svg>Compra segura</li>
+    <li><svg aria-hidden="true"><use href="#check"/></svg>Pague só na entrega</li>
+    <li><svg aria-hidden="true"><use href="#check"/></svg>Entrega para todo o Brasil</li>
+  </ul>
+</div>
+
+<!-- Sem menu de navegação (página de destino). A marca leva à home institucional. -->
+<header class="topo">
+  <div class="envelope">
+    <a class="marca" href="/" aria-label="Pago na Entrega, página inicial">
+      <svg aria-hidden="true"><use href="#carimbo-mini"/></svg>
+      <span>pago na <em>entrega</em></span>
+    </a>
+  </div>
+</header>
+
+<main>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="envelope">
+      <figure class="foto">
+        <img src="{{IMG_PRODUTO}}" alt="{{PRODUTO_NOME}}" width="800" height="800" fetchpriority="high">
+        <svg class="selo-canto" role="img" aria-label="Pagamento só na entrega"><use href="#selo-entrega"/></svg>
+      </figure>
+
+      <div>
+        <p class="produto-nome">{{PRODUTO_NOME}}</p>
+        <h1>{{HEADLINE_BENEFICIO}}</h1>
+
+        <!-- Preços: SEMPRE do checkout real. Se não existe preço "de" real, apague o .preco-de inteiro. -->
+        <div class="preco">
+          <span class="preco-de">de <s>{{PRECO_DE}}</s> por</span>
+          <span class="preco-por">{{PRECO_POR}}</span>
+          <span class="preco-nota">Pago só quando o pedido chegar</span>
+        </div>
+
+        <!--
+          URGÊNCIA: só se for real (estoque contado ou prazo de oferta de fato).
+          Exemplo para ativar com dado verdadeiro:
+          <p class="preco-nota" style="color:var(--carimbo)">Restam 37 unidades deste lote</p>
+        -->
+
+        <p class="confirmacao">Depois do pedido, entramos em contato para confirmar seus dados antes do envio. Você não paga nada agora.</p>
+        <a class="botao botao-largo" href="#pedido">Fazer pedido</a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divisa">
+
+  <!-- ========== BENEFÍCIOS (lista editorial, sem cards) ========== -->
+  <section class="secao" aria-labelledby="t-benef">
+    <div class="envelope">
+      <h2 class="secao-titulo" id="t-benef">O que você recebe</h2>
+      <!-- Benefícios concretos e verificáveis. Sem alegação médica nem promessa de resultado. -->
+      <ul class="beneficios">
+        <li><svg aria-hidden="true"><use href="#check"/></svg><span>{{BENEFICIO_1}}</span></li>
+        <li><svg aria-hidden="true"><use href="#check"/></svg><span>{{BENEFICIO_2}}</span></li>
+        <li><svg aria-hidden="true"><use href="#check"/></svg><span>{{BENEFICIO_3}}</span></li>
+        <li><svg aria-hidden="true"><use href="#check"/></svg><span>{{BENEFICIO_4}}</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <hr class="divisa">
+
+  <!-- ========== COMO FUNCIONA ========== -->
+  <section class="secao" aria-labelledby="t-como">
+    <div class="envelope">
+      <h2 class="secao-titulo" id="t-como">Como funciona o seu pedido</h2>
+      <p class="secao-intro">Em nenhum passo você paga antes de receber.</p>
+      <ol class="trilha">
+        <li><h3>Você faz o pedido</h3><p>Preencha o formulário abaixo com nome, telefone e endereço.</p></li>
+        <li><h3>A gente confirma</h3><p>Entramos em contato pelo WhatsApp para conferir seus dados.</p></li>
+        <li><h3>O produto vai até você</h3><p>Despachamos para o endereço informado.</p></li>
+        <li><h3>Você recebe e paga</h3><p>Confere o pedido e só então faz o pagamento.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ========== GARANTIA ========== -->
+  <section class="secao garantia" aria-labelledby="t-garantia">
+    <div class="envelope">
+      <svg class="selo-garantia" aria-hidden="true"><use href="#carimbo"/></svg>
+      <div>
+        <h2 class="secao-titulo" id="t-garantia">Zero risco para você</h2>
+        <p style="margin-top:14px">Você <strong>só paga quando o pedido está nas suas mãos</strong>. Se recusar na entrega, não paga nada.</p>
+        <p>Depois de receber, ainda tem <strong>7 dias para desistir da compra</strong>, como garante o Código de Defesa do Consumidor.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FORMULÁRIO DE PEDIDO ========== -->
+  <section class="secao" id="pedido" aria-labelledby="t-pedido">
+    <div class="envelope">
+      <h2 class="secao-titulo" id="t-pedido">Faça seu pedido</h2>
+      <p class="secao-intro">Preencha os dados de entrega. O pagamento é feito só quando o produto chegar.</p>
+
+      <div class="pedido-caixa" id="pedido-caixa">
+        <div class="resumo">
+          <strong>{{PRODUTO_NOME}}</strong>
+          <span>{{PRECO_POR}}</span>
+        </div>
+
+        <form id="form-pedido" novalidate>
+          <div class="campos">
+            <div class="campo">
+              <label for="f-nome">Nome completo</label>
+              <input id="f-nome" name="nome" type="text" autocomplete="name" required aria-describedby="e-nome">
+              <span class="erro" id="e-nome"></span>
+            </div>
+            <div class="campo">
+              <label for="f-telefone">WhatsApp ou telefone <span class="dica">com DDD</span></label>
+              <input id="f-telefone" name="telefone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(11) 91234-5678" required aria-describedby="e-telefone">
+              <span class="erro" id="e-telefone"></span>
+            </div>
+            <div class="campo">
+              <label for="f-endereco">Endereço <span class="dica">rua, número e complemento</span></label>
+              <input id="f-endereco" name="endereco" type="text" autocomplete="street-address" required aria-describedby="e-endereco">
+              <span class="erro" id="e-endereco"></span>
+            </div>
+            <div class="campo">
+              <label for="f-bairro">Bairro</label>
+              <input id="f-bairro" name="bairro" type="text" autocomplete="address-level3" required aria-describedby="e-bairro">
+              <span class="erro" id="e-bairro"></span>
+            </div>
+            <div class="linha-2 cidade">
+              <div class="campo">
+                <label for="f-cidade">Cidade</label>
+                <input id="f-cidade" name="cidade" type="text" autocomplete="address-level2" required aria-describedby="e-cidade">
+                <span class="erro" id="e-cidade"></span>
+              </div>
+              <div class="campo">
+                <label for="f-uf">Estado</label>
+                <select id="f-uf" name="uf" autocomplete="address-level1" required aria-describedby="e-uf">
+                  <option value="">UF</option>
+                  <option>AC</option><option>AL</option><option>AP</option><option>AM</option><option>BA</option><option>CE</option><option>DF</option><option>ES</option><option>GO</option><option>MA</option><option>MT</option><option>MS</option><option>MG</option><option>PA</option><option>PB</option><option>PR</option><option>PE</option><option>PI</option><option>RJ</option><option>RN</option><option>RS</option><option>RO</option><option>RR</option><option>SC</option><option>SP</option><option>SE</option><option>TO</option>
+                </select>
+                <span class="erro" id="e-uf"></span>
+              </div>
+            </div>
+            <div class="linha-2">
+              <div class="campo">
+                <label for="f-cep">CEP</label>
+                <input id="f-cep" name="cep" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="00000-000" maxlength="9" required aria-describedby="e-cep">
+                <span class="erro" id="e-cep"></span>
+              </div>
+              <div class="campo">
+                <label for="f-qtd">Quantidade</label>
+                <select id="f-qtd" name="quantidade" required>
+                  <option value="1" selected>1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Anti-spam simples (campo invisível): útil quando o envio virar fetch() -->
+            <div class="armadilha" aria-hidden="true">
+              <label for="f-site">Não preencha</label>
+              <input id="f-site" name="site" type="text" tabindex="-1" autocomplete="off">
+            </div>
+
+            <button class="botao botao-largo" type="submit" id="botao-enviar">Fazer pedido</button>
+          </div>
+          <p class="form-nota">Você não paga nada agora. Vamos abrir o WhatsApp com o seu pedido pronto para confirmar.</p>
+        </form>
+
+        <div class="enviado" role="status" aria-live="polite" tabindex="-1" id="pedido-enviado">
+          <svg aria-hidden="true"><use href="#carimbo-mini"/></svg>
+          <h3>Pedido montado</h3>
+          <p>Abrimos o WhatsApp com os seus dados. Envie a mensagem para concluir o pedido.</p>
+          <p style="margin-top:10px">O WhatsApp não abriu? <a href="#" id="link-reabrir">Toque aqui para abrir de novo</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divisa">
+
+  <!-- ========== FAQ DO PRODUTO ========== -->
+  <section class="secao" aria-labelledby="t-faq">
+    <div class="envelope">
+      <h2 class="secao-titulo" id="t-faq">Perguntas sobre o pedido</h2>
+      <div class="faq">
+        <details>
+          <summary>{{FAQ_1_PERGUNTA}}</summary>
+          <div class="resposta"><p>{{FAQ_1_RESPOSTA}}</p></div>
+        </details>
+        <details>
+          <summary>{{FAQ_2_PERGUNTA}}</summary>
+          <div class="resposta"><p>{{FAQ_2_RESPOSTA}}</p></div>
+        </details>
+        <details>
+          <summary>{{FAQ_3_PERGUNTA}}</summary>
+          <div class="resposta"><p>{{FAQ_3_RESPOSTA}}</p></div>
+        </details>
+        <!-- Perguntas fixas do modelo de pagamento na entrega (valem para qualquer produto) -->
+        <details>
+          <summary>Quando eu pago?</summary>
+          <div class="resposta"><p>Só quando o pedido chegar ao seu endereço. Nada é cobrado ao preencher o formulário.</p></div>
+        </details>
+        <details>
+          <summary>E se eu mudar de ideia?</summary>
+          <div class="resposta"><p>Você pode recusar a entrega sem pagar nada. Se já recebeu, tem 7 dias para desistir da compra, conforme o Art. 49 do Código de Defesa do Consumidor. Detalhes em <a href="/trocas-e-devolucoes">Trocas e Devoluções</a>.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Rodapé igual ao da home: só links legais. Sem WhatsApp/CNPJ visíveis. -->
+<footer class="rodape">
+  <div class="envelope">
+    <nav aria-label="Informações legais">
+      <a href="/">Início</a>
+      <a href="/politica-de-privacidade">Política de Privacidade</a>
+      <a href="/termos">Termos de Uso</a>
+      <a href="/trocas-e-devolucoes">Trocas e Devoluções</a>
+    </nav>
+    <small>Você pode desistir da compra em até 7 dias a partir do recebimento do produto, conforme o Art. 49 do Código de Defesa do Consumidor.</small>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* =================== CONFIGURAÇÃO POR PRODUTO =================== */
+  // Número que recebe os pedidos: DDI + DDD + número, só dígitos (ex.: 5511912345678).
+  // Fica APENAS aqui no código — nunca é impresso na página.
+  var WHATSAPP_NUMBER = '{{WHATSAPP_NUMBER}}';
+
+  var PRODUTO = {
+    nome: '{{PRODUTO_NOME}}',
+    slug: '{{PRODUTO_SLUG}}',
+    preco: '{{PRECO_POR}}'
+  };
+
+  // Quando houver CRM/planilha/webhook, preencha a URL: o envio passa a ser
+  // um fetch() com o mesmo objeto de pedido, e o WhatsApp vira fallback.
+  var ENDPOINT_PEDIDOS = '';
+  /* ================================================================ */
+
+  var form = document.getElementById('form-pedido');
+  var caixa = document.getElementById('pedido-caixa');
+  var botao = document.getElementById('botao-enviar');
+  var reabrir = document.getElementById('link-reabrir');
+  var campo = function (n) { return form.elements[n]; };
+  var digitos = function (s) { return String(s || '').replace(/\D/g, ''); };
+
+  // Origem do clique (guarda gclid/UTMs para conversões offline no Google Ads)
+  var params = new URLSearchParams(location.search);
+  var ORIGEM = {};
+  ['gclid', 'gbraid', 'wbraid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
+    .forEach(function (k) { if (params.get(k)) ORIGEM[k] = params.get(k); });
+
+  /* ---------- Máscaras ---------- */
+  campo('telefone').addEventListener('input', function (e) {
+    var d = digitos(e.target.value).slice(0, 11);
+    var r = d;
+    if (d.length > 2) r = '(' + d.slice(0, 2) + ') ' + d.slice(2);
+    if (d.length > 6) r = '(' + d.slice(0, 2) + ') ' + d.slice(2, d.length - 4) + '-' + d.slice(-4);
+    e.target.value = r;
+  });
+  campo('cep').addEventListener('input', function (e) {
+    var d = digitos(e.target.value).slice(0, 8);
+    e.target.value = d.length > 5 ? d.slice(0, 5) + '-' + d.slice(5) : d;
+    if (d.length === 8) buscarCep(d);
+  });
+
+  // Autopreenchimento por CEP (ViaCEP). Se falhar, o cliente digita normalmente.
+  function buscarCep(cep) {
+    if (!window.fetch) return;
+    fetch('https://viacep.com.br/ws/' + cep + '/json/')
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d || d.erro) return;
+        if (d.logradouro && !campo('endereco').value) campo('endereco').value = d.logradouro + ', ';
+        if (d.bairro && !campo('bairro').value) campo('bairro').value = d.bairro;
+        if (d.localidade && !campo('cidade').value) campo('cidade').value = d.localidade;
+        if (d.uf && !campo('uf').value) campo('uf').value = d.uf;
+      })
+      .catch(function () {});
+  }
+
+  /* ---------- Validação ---------- */
+  var REGRAS = {
+    nome: function (v) { return v.trim().split(/\s+/).length >= 2 && v.trim().length >= 5 ? '' : 'Informe nome e sobrenome.'; },
+    telefone: function (v) { var d = digitos(v); return d.length === 10 || d.length === 11 ? '' : 'Informe o número com DDD.'; },
+    endereco: function (v) { return v.trim().length >= 5 ? '' : 'Informe rua e número.'; },
+    bairro: function (v) { return v.trim().length >= 2 ? '' : 'Informe o bairro.'; },
+    cidade: function (v) { return v.trim().length >= 2 ? '' : 'Informe a cidade.'; },
+    uf: function (v) { return v ? '' : 'Escolha o estado.'; },
+    cep: function (v) { return digitos(v).length === 8 ? '' : 'O CEP tem 8 números.'; }
+  };
+
+  function validar(nome) {
+    var el = campo(nome);
+    var msg = REGRAS[nome](el.value);
+    el.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    document.getElementById('e-' + nome).textContent = msg;
+    return !msg;
+  }
+  Object.keys(REGRAS).forEach(function (n) {
+    campo(n).addEventListener('blur', function () { if (campo(n).value) validar(n); });
+  });
+
+  /* ---------- Estrutura de dados do pedido (pronta para um endpoint) ---------- */
+  function lerPedido() {
+    return {
+      produto: { nome: PRODUTO.nome, slug: PRODUTO.slug, preco_unitario: PRODUTO.preco },
+      quantidade: parseInt(campo('quantidade').value, 10) || 1,
+      cliente: {
+        nome: campo('nome').value.trim(),
+        telefone: digitos(campo('telefone').value)
+      },
+      entrega: {
+        endereco: campo('endereco').value.trim(),
+        bairro: campo('bairro').value.trim(),
+        cidade: campo('cidade').value.trim(),
+        uf: campo('uf').value,
+        cep: digitos(campo('cep').value)
+      },
+      pagamento: 'na_entrega',
+      origem: ORIGEM,
+      pagina: location.origin + location.pathname,
+      criado_em: new Date().toISOString()
+    };
+  }
+
+  function mensagemWhatsApp(p) {
+    var tel = p.cliente.telefone;
+    var cep = p.entrega.cep;
+    return [
+      'Olá! Quero fazer um pedido com pagamento na entrega.',
+      '',
+      'Produto: ' + p.produto.nome,
+      'Quantidade: ' + p.quantidade,
+      'Preço unitário: ' + p.produto.preco_unitario,
+      '',
+      'Nome: ' + p.cliente.nome,
+      'Telefone: (' + tel.slice(0, 2) + ') ' + tel.slice(2, -4) + '-' + tel.slice(-4),
+      'Endereço: ' + p.entrega.endereco,
+      'Bairro: ' + p.entrega.bairro,
+      'Cidade: ' + p.entrega.cidade + ' / ' + p.entrega.uf,
+      'CEP: ' + cep.slice(0, 5) + '-' + cep.slice(5)
+    ].join('\n');
+  }
+
+  function linkWhatsApp(p) {
+    return 'https://wa.me/' + digitos(WHATSAPP_NUMBER) + '?text=' + encodeURIComponent(mensagemWhatsApp(p));
+  }
+
+  // Ponto único de envio. Hoje: WhatsApp. Futuro: fetch() ao ENDPOINT_PEDIDOS.
+  function enviarPedido(p) {
+    if (ENDPOINT_PEDIDOS) {
+      return fetch(ENDPOINT_PEDIDOS, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(p),
+        keepalive: true
+      }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); });
+    }
+    location.href = linkWhatsApp(p);
+    return Promise.resolve();
+  }
+
+  function registrarConversao(p) {
+    // Google Ads: descomente após instalar a tag gtag.js com o ID real da conta.
+    // if (window.gtag) gtag('event', 'conversion', { send_to: 'AW-XXXXXXXXX/XXXXXXXX', currency: 'BRL' });
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (campo('site').value) return; // robô
+
+    var invalidos = Object.keys(REGRAS).filter(function (n) { return !validar(n); });
+    if (invalidos.length) { campo(invalidos[0]).focus(); return; }
+
+    if (/\{\{|\D/.test(WHATSAPP_NUMBER) && !ENDPOINT_PEDIDOS) {
+      console.error('Configure WHATSAPP_NUMBER no produto-template.html (só dígitos, com 55 + DDD).');
+    }
+
+    var pedido = lerPedido();
+    botao.disabled = true;
+    reabrir.href = linkWhatsApp(pedido);
+    registrarConversao(pedido);
+
+    enviarPedido(pedido)
+      .then(function () {
+        caixa.classList.add('ok');
+        document.getElementById('pedido-enviado').focus();
+      })
+      .catch(function () {
+        // Falhou o endpoint: cai para o WhatsApp para não perder o pedido.
+        location.href = linkWhatsApp(pedido);
+        caixa.classList.add('ok');
+      })
+      .then(function () { botao.disabled = false; });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pago na Entrega — peça agora, pague quando chegar</title>
+<meta name="description" content="Loja online com pagamento na entrega. Você faz o pedido, recebe em casa e só paga quando o produto chega. Sem cartão e sem pagar adiantado.">
+<link rel="canonical" href="https://pago-na-entrega.com/">
+<meta name="theme-color" content="#1C2E1F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<!--
+  ============================================================
+  pago-na-entrega.com — home institucional (raiz do domínio)
+  ============================================================
+  Por que esta página existe: as páginas de produto (/produto-slug) são
+  destino de anúncio e não ficam no menu. Para não cair na política do
+  Google Ads de "Circumventing Systems" (destino inalcançável pela
+  navegação normal = risco de SUSPENSÃO de conta), o domínio precisa de
+  uma estrutura institucional real: esta home + páginas legais no rodapé.
+  Ao escalar tráfego, valide com orçamento pequeno antes de subir verba.
+
+  Ver o bloco comentado "OFERTAS ATIVAS" mais abaixo: listar as ofertas
+  ativas aqui reduz ainda mais esse risco.
+
+  DADOS LEGAIS: por decisão da cliente, CNPJ, razão social e WhatsApp NÃO
+  aparecem em nenhum texto visível desta página. O CNPJ continua sendo
+  obrigatório por lei para operar e faturar no Brasil (emissão de NF-e,
+  contrato com transportadora/gateway, Decreto 7.962/2013 do comércio
+  eletrônico) — só não precisa estar impresso aqui. Mantê-lo disponível
+  nas Políticas/Termos ou mediante solicitação.
+-->
+<style>
+  :root {
+    --papel: #F7F1E4;
+    --papel-claro: #FFFDF8;
+    --tinta: #1C2E1F;
+    --tinta-suave: #2C4530;
+    --carimbo: #B23A2E;
+    --carimbo-escuro: #8F2C22;
+    --kraft: #C9A979;
+    --aprovado: #3F6B4A;
+    --texto-sec: #4A5A4C;
+    --borda: rgba(201, 169, 121, .55);
+    --titulo: "Archivo", "Arial Black", system-ui, sans-serif;
+    --corpo: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --largura: 1120px;
+    --gutter: 20px;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--papel);
+    color: var(--tinta);
+    font: 400 1.0625rem/1.6 var(--corpo);
+    -webkit-font-smoothing: antialiased;
+  }
+  img, svg { max-width: 100%; display: block; }
+  a { color: inherit; }
+  h1, h2, h3 { font-family: var(--titulo); line-height: 1.08; margin: 0; letter-spacing: -0.01em; }
+  p { margin: 0; }
+  .envelope { width: 100%; max-width: var(--largura); margin: 0 auto; padding: 0 var(--gutter); }
+  .pular { position: absolute; left: -9999px; }
+  .pular:focus { left: var(--gutter); top: 8px; z-index: 10; background: var(--papel-claro); padding: 8px 12px; }
+  :focus-visible { outline: 3px solid var(--carimbo); outline-offset: 3px; }
+
+  /* ---------- Cabeçalho ---------- */
+  .topo { border-bottom: 1px solid var(--borda); }
+  .topo .envelope { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; }
+  .marca { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font: 800 1.125rem/1 var(--titulo); letter-spacing: -0.02em; }
+  .marca svg { width: 34px; height: 34px; color: var(--carimbo); }
+  .marca em { font-style: normal; color: var(--carimbo); }
+  .nav { display: flex; gap: 4px 18px; flex-wrap: wrap; }
+  .nav a { text-decoration: none; font-weight: 600; font-size: .98rem; color: var(--tinta-suave); padding: 6px 0; border-bottom: 2px solid transparent; }
+  .nav a:hover { border-bottom-color: var(--kraft); }
+
+  /* ---------- Botões ---------- */
+  .botao {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 52px; padding: 14px 26px;
+    background: var(--carimbo); color: #fff;
+    font: 800 1.0625rem/1.1 var(--titulo); text-decoration: none;
+    border: 0; border-radius: 6px; cursor: pointer;
+    box-shadow: 0 3px 0 var(--carimbo-escuro);
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  }
+  .botao:hover { background: #A5342A; }
+  .botao:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--carimbo-escuro); }
+  .botao-linha { background: transparent; color: var(--tinta); box-shadow: inset 0 0 0 2px var(--tinta); }
+  .botao-linha:hover { background: var(--tinta); color: var(--papel-claro); }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 36px 0 48px; }
+  .hero .envelope { display: grid; gap: 32px; }
+  .sobretitulo { color: var(--carimbo); font-weight: 700; font-size: 1rem; margin-bottom: 14px; }
+  .hero h1 { font-size: clamp(2.4rem, 9vw, 4.25rem); font-weight: 900; letter-spacing: -0.03em; }
+  .hero h1 span { display: block; color: var(--carimbo); }
+  .hero .sub { margin-top: 18px; font-size: 1.15rem; color: var(--texto-sec); max-width: 34em; }
+  .fatos { list-style: none; padding: 0; margin: 26px 0 0; display: grid; gap: 10px; }
+  .fatos li { display: flex; align-items: center; gap: 10px; font-weight: 600; }
+  .fatos svg { width: 22px; height: 22px; flex: none; color: var(--aprovado); }
+  .hero .acoes { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .cena { position: relative; background: var(--papel-claro); border: 1px solid var(--borda); border-radius: 10px; padding: 12px 8px 0; }
+  .cena .ilustracao { width: 100%; height: auto; }
+  .cena .selo-hero { position: absolute; width: 104px; height: 104px; top: -18px; left: -6px; color: var(--carimbo); transform: rotate(-12deg); }
+
+  /* ---------- Seções ---------- */
+  .secao { padding: 64px 0; }
+  .secao-titulo { font-size: clamp(1.85rem, 6vw, 2.75rem); font-weight: 800; letter-spacing: -0.025em; }
+  .secao-intro { margin-top: 12px; color: var(--texto-sec); font-size: 1.1rem; max-width: 38em; }
+  .divisa { border: 0; border-top: 1px solid var(--borda); margin: 0; }
+
+  /* ---------- Trilha "Como funciona" (única seção numerada) ---------- */
+  .trilha { list-style: none; margin: 40px 0 0; padding: 0; display: grid; gap: 0; counter-reset: passo; }
+  .trilha li { position: relative; padding: 0 0 32px 64px; counter-increment: passo; }
+  .trilha li:last-child { padding-bottom: 0; }
+  .trilha li::before {
+    content: counter(passo);
+    position: absolute; left: 0; top: -2px;
+    width: 44px; height: 44px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--papel); border: 2px solid var(--tinta);
+    font: 900 1.2rem/1 var(--titulo); color: var(--tinta);
+    z-index: 1;
+  }
+  .trilha li:last-child::before { background: var(--aprovado); border-color: var(--aprovado); color: #fff; }
+  .trilha li::after {
+    content: ""; position: absolute; left: 21px; top: 44px; bottom: 0;
+    border-left: 2px dashed var(--kraft);
+  }
+  .trilha li:last-child::after { display: none; }
+  .trilha h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 4px; }
+  .trilha p { color: var(--texto-sec); }
+
+  /* ---------- Por que pagar na entrega (editorial) ---------- */
+  .editorial { display: grid; gap: 28px; }
+  .editorial .texto p + p { margin-top: 14px; }
+  .editorial .texto p { color: var(--texto-sec); font-size: 1.1rem; }
+  .motivos { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--borda); }
+  .motivos li { padding: 20px 0; border-bottom: 1px solid var(--borda); display: grid; gap: 4px; }
+  .motivos strong { font: 800 1.15rem/1.25 var(--titulo); }
+  .motivos span { color: var(--texto-sec); }
+
+  /* ---------- Garantia ---------- */
+  .garantia { background: var(--tinta); color: var(--papel); }
+  .garantia .envelope { display: grid; gap: 24px; align-items: center; }
+  .garantia .selo-garantia { width: 120px; height: 120px; color: #E2735F; transform: rotate(8deg); }
+  .garantia h2 { color: var(--papel-claro); }
+  .garantia p { color: #CFD8CC; font-size: 1.1rem; max-width: 36em; }
+  .garantia p + p { margin-top: 12px; }
+  .garantia strong { color: var(--papel-claro); }
+
+  /* ---------- Faixa de CTA ---------- */
+  .faixa { background: var(--papel-claro); border-top: 1px solid var(--borda); border-bottom: 1px solid var(--borda); }
+  .faixa .envelope { padding-top: 44px; padding-bottom: 44px; display: grid; gap: 18px; }
+  .faixa h2 { font-size: clamp(1.5rem, 5vw, 2rem); font-weight: 800; }
+  .faixa p { color: var(--texto-sec); font-size: 1.1rem; max-width: 40em; }
+  .ofertas { list-style: none; padding: 0; margin: 6px 0 0; display: grid; gap: 8px; }
+  .ofertas a { font-weight: 700; color: var(--carimbo); }
+
+  /* ---------- FAQ ---------- */
+  .faq { margin-top: 32px; border-top: 1px solid var(--borda); }
+  .faq details { border-bottom: 1px solid var(--borda); }
+  .faq summary {
+    list-style: none; cursor: pointer; padding: 20px 40px 20px 0; position: relative;
+    font: 700 1.125rem/1.35 var(--titulo);
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: ""; position: absolute; right: 6px; top: 50%; width: 12px; height: 12px;
+    border-right: 2.5px solid var(--carimbo); border-bottom: 2.5px solid var(--carimbo);
+    transform: translateY(-70%) rotate(45deg); transition: transform .2s ease;
+  }
+  .faq details[open] summary::after { transform: translateY(-25%) rotate(-135deg); }
+  .faq .resposta { padding: 0 0 22px; color: var(--texto-sec); max-width: 44em; }
+  .faq .resposta p + p { margin-top: 10px; }
+
+  /* ---------- Rodapé ---------- */
+  .rodape { padding: 40px 0 48px; border-top: 1px solid var(--borda); font-size: .95rem; color: var(--texto-sec); }
+  .rodape .envelope { display: grid; gap: 18px; }
+  .rodape nav { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+  .rodape nav a { font-weight: 600; color: var(--tinta); }
+  .rodape small { font-size: .9rem; display: block; max-width: 46em; }
+
+  /* ---------- Desktop ---------- */
+  @media (min-width: 860px) {
+    :root { --gutter: 32px; }
+    .hero { padding: 64px 0 80px; }
+    .hero .envelope { grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; }
+    .fatos { grid-template-columns: repeat(3, auto); justify-content: start; gap: 10px 24px; }
+    .cena .selo-hero { width: 128px; height: 128px; top: -34px; left: -34px; }
+    .secao { padding: 96px 0; }
+    .trilha { grid-template-columns: repeat(4, 1fr); gap: 28px; }
+    .trilha li { padding: 64px 0 0; }
+    .trilha li::before { top: 0; left: 0; }
+    .trilha li::after { left: 44px; right: -28px; top: 21px; bottom: auto; border-left: 0; border-top: 2px dashed var(--kraft); }
+    .editorial { grid-template-columns: 1fr 1.15fr; gap: 72px; align-items: start; }
+    .garantia .envelope { grid-template-columns: auto 1fr; gap: 48px; }
+    .garantia .selo-garantia { width: 150px; height: 150px; }
+    .faixa .envelope { grid-template-columns: 1fr auto; align-items: center; gap: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Símbolos reutilizáveis: carimbo (marca da página) e check -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="tinta-irregular" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="ruido"/>
+      <feDisplacementMap in="SourceGraphic" in2="ruido" scale="2.4"/>
+    </filter>
+    <path id="anel-texto" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/>
+  </defs>
+  <symbol id="carimbo" viewBox="0 0 200 200">
+    <g filter="url(#tinta-irregular)" fill="none" stroke="currentColor">
+      <circle cx="100" cy="100" r="94" stroke-width="5"/>
+      <circle cx="100" cy="100" r="66" stroke-width="2"/>
+      <text font-family="Archivo, sans-serif" font-weight="800" font-size="17" fill="currentColor" stroke="none" letter-spacing="3.55">
+        <textPath href="#anel-texto">pague só na entrega ★ entrega nacional ★</textPath>
+      </text>
+      <path d="M70 102 l20 20 l40 -44" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </symbol>
+  <symbol id="carimbo-mini" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" filter="url(#tinta-irregular)">
+      <circle cx="20" cy="20" r="17.5" stroke-width="2.5"/>
+      <circle cx="20" cy="20" r="13" stroke-width="1"/>
+      <path d="M13.5 20.5 l4.5 4.5 l8.5 -9.5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </symbol>
+  <symbol id="check" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    <path d="M7.5 12.4 l3 3 l6 -6.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+</svg>
+
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="topo">
+  <div class="envelope">
+    <a class="marca" href="/" aria-label="Pago na Entrega, página inicial">
+      <svg aria-hidden="true"><use href="#carimbo-mini"/></svg>
+      <span>pago na <em>entrega</em></span>
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#perguntas">Perguntas</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </div>
+</header>
+
+<main id="conteudo">
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="envelope">
+      <div>
+        <p class="sobretitulo">Loja online com pagamento na entrega</p>
+        <h1>Peça agora. <span>Pague quando chegar.</span></h1>
+        <p class="sub">Você faz o pedido, a gente confirma seus dados e envia para o seu endereço. O pagamento é feito só quando o produto está nas suas mãos.</p>
+        <ul class="fatos">
+          <li><svg aria-hidden="true"><use href="#check"/></svg>Sem cartão de crédito</li>
+          <li><svg aria-hidden="true"><use href="#check"/></svg>Sem pagar adiantado</li>
+          <li><svg aria-hidden="true"><use href="#check"/></svg>Entrega para todo o Brasil</li>
+        </ul>
+        <div class="acoes">
+          <a class="botao" href="#como-funciona">Ver como funciona</a>
+          <a class="botao botao-linha" href="#perguntas">Tirar dúvidas</a>
+        </div>
+      </div>
+
+      <figure class="cena" style="margin:0">
+        <svg class="selo-hero" aria-hidden="true"><use href="#carimbo"/></svg>
+        <!-- Ilustração desenhada à mão: entregador passando a caixa (com selinho de check) ao cliente na porta -->
+        <svg class="ilustracao" viewBox="0 0 480 380" role="img" aria-labelledby="ilu-titulo">
+          <title id="ilu-titulo">Entregador entregando uma caixa com selo de conferido para um cliente na porta de casa</title>
+          <g fill="none" stroke="#1C2E1F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- parede e porta -->
+            <path d="M286 362 V86 Q286 80 292 80 H470" stroke="#C9A979"/>
+            <path d="M300 362 V112 Q300 104 308 104 H412 Q420 104 420 112 V362" fill="#EFE3CC"/>
+            <path d="M420 112 L452 124 V354 L420 362" fill="#FFFDF8"/>
+            <circle cx="444" cy="242" r="3.2" fill="#1C2E1F"/>
+            <rect x="436" y="52" width="26" height="18" rx="2" stroke="#C9A979"/>
+            <path d="M444 61 h10" stroke="#C9A979"/>
+            <!-- capacho -->
+            <path d="M306 362 L312 352 H408 L414 362" stroke="#C9A979"/>
+            <!-- chão -->
+            <path d="M14 362 H470"/>
+            <path d="M44 362 q4 -12 8 0 M54 362 q3 -9 6 0 M232 362 q4 -11 8 0" stroke-width="1.6"/>
+
+            <!-- planta em vaso ao lado da porta -->
+            <path d="M462 362 l-4 -26 h-22 l-4 26" fill="#C9A979" stroke-width="2"/>
+            <path d="M447 336 q-14 -26 -6 -46 M447 336 q4 -30 14 -40 M447 336 q-2 -18 -18 -28" stroke="#3F6B4A" stroke-width="2"/>
+
+            <!-- ===== cliente na porta ===== -->
+            <path d="M338 362 V300 M374 362 V300" />
+            <path d="M330 362 h14 M368 362 h14" stroke-width="3"/>
+            <path d="M334 304 Q332 236 340 196 Q356 184 372 196 Q380 236 378 304 Z" fill="#3F6B4A"/>
+            <path d="M341 198 Q306 214 290 226" />
+            <path d="M372 198 Q382 236 364 250" />
+            <circle cx="356" cy="160" r="20" fill="#FFFDF8"/>
+            <path d="M336 158 Q334 132 358 136 Q380 136 378 162 Q372 146 356 148 Q344 148 336 158 Z" fill="#1C2E1F"/>
+            <path d="M350 168 q4 4 9 0" stroke-width="1.8"/>
+            <path d="M347 160 h0.1 M362 160 h0.1" stroke-width="3.4"/>
+
+            <!-- ===== entregador ===== -->
+            <path d="M138 362 V290 M170 362 V290" />
+            <path d="M126 362 h16 M164 362 h18" stroke-width="3"/>
+            <path d="M128 294 Q126 230 134 196 Q154 182 174 196 Q182 230 178 294 Z" fill="#FFFDF8"/>
+            <!-- alça e bolsa -->
+            <path d="M136 200 L176 262" stroke-width="1.8"/>
+            <path d="M166 254 h26 v26 h-26 Z" fill="#C9A979" stroke-width="2"/>
+            <!-- braços estendidos segurando a caixa -->
+            <path d="M172 200 Q196 214 214 232" />
+            <path d="M138 204 Q170 238 214 246" />
+            <circle cx="156" cy="158" r="21" fill="#FFFDF8"/>
+            <!-- boné -->
+            <path d="M135 154 Q136 130 158 130 Q178 132 178 152 Z" fill="#B23A2E" stroke="#1C2E1F"/>
+            <path d="M176 150 Q192 150 196 156 Q184 158 172 156" fill="#B23A2E"/>
+            <path d="M150 166 q5 5 11 1" stroke-width="1.8"/>
+            <path d="M164 159 h0.1" stroke-width="3.4"/>
+
+            <!-- ===== caixa com selinho de check ===== -->
+            <g transform="rotate(-4 252 232)">
+              <path d="M206 206 H296 V262 H206 Z" fill="#C9A979"/>
+              <path d="M206 206 L216 194 H286 L296 206" fill="#D9BF94"/>
+              <path d="M251 194 V262" stroke="#FFFDF8" stroke-width="5"/>
+              <path d="M251 194 V262" stroke="#1C2E1F" stroke-width="0.8" opacity=".35"/>
+              <circle cx="276" cy="242" r="13" fill="#FFFDF8" stroke="#B23A2E" stroke-width="2.2"/>
+              <path d="M269.5 242.5 l4.5 4.5 l8 -8.6" stroke="#B23A2E" stroke-width="2.6"/>
+            </g>
+
+            <!-- traços de movimento -->
+            <path d="M80 220 h24 M70 236 h30 M86 252 h18" stroke="#C9A979" stroke-width="2"/>
+          </g>
+        </svg>
+      </figure>
+    </div>
+  </section>
+
+  <hr class="divisa">
+
+  <!-- ========== COMO FUNCIONA (única seção numerada: sequência real) ========== -->
+  <section class="secao" id="como-funciona" aria-labelledby="t-como">
+    <div class="envelope">
+      <h2 class="secao-titulo" id="t-como">Como funciona o pedido</h2>
+      <p class="secao-intro">Quatro passos, do anúncio até a sua porta. Em nenhum deles você paga antes de receber.</p>
+      <ol class="trilha">
+        <li>
+          <h3>Você faz o pedido</h3>
+          <p>Na página do produto, preencha nome, telefone e endereço. Leva menos de dois minutos.</p>
+        </li>
+        <li>
+          <h3>A gente confirma</h3>
+          <p>Entramos em contato pelo WhatsApp ou telefone para conferir seus dados antes de enviar.</p>
+        </li>
+        <li>
+          <h3>O produto vai até você</h3>
+          <p>Despachamos para o endereço informado e você acompanha a entrega.</p>
+        </li>
+        <li>
+          <h3>Você recebe e paga</h3>
+          <p>Confere o pedido na hora e só então faz o pagamento a quem entregou.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <hr class="divisa">
+
+  <!-- ========== POR QUE PAGAR NA ENTREGA (editorial, sem cards) ========== -->
+  <section class="secao" aria-labelledby="t-porque">
+    <div class="envelope editorial">
+      <div class="texto">
+        <h2 class="secao-titulo" id="t-porque">Por que pagar na entrega</h2>
+        <p style="margin-top:18px">Comprar pela internet ainda gera dúvida: o produto vai chegar? É o que aparece na foto? E se eu não gostar?</p>
+        <p>No pagamento na entrega essa dúvida fica do nosso lado, não do seu. Quem assume o envio primeiro somos nós. Você só paga depois de ver o pedido chegar.</p>
+      </div>
+      <ul class="motivos">
+        <li><strong>Você vê antes de pagar</strong><span>O pagamento acontece no momento em que o pedido chega ao seu endereço.</span></li>
+        <li><strong>Não precisa de cartão</strong><span>Nada de limite de cartão, boleto ou transferência antecipada.</span></li>
+        <li><strong>Seus dados de pagamento não ficam na internet</strong><span>No pedido pedimos só o necessário para a entrega: nome, telefone e endereço.</span></li>
+        <li><strong>Se não quiser, pode recusar</strong><span>Mudou de ideia antes de pagar? Basta recusar a entrega, sem custo nenhum.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ========== GARANTIA ========== -->
+  <section class="secao garantia" aria-labelledby="t-garantia">
+    <div class="envelope">
+      <svg class="selo-garantia" aria-hidden="true"><use href="#carimbo"/></svg>
+      <div>
+        <h2 class="secao-titulo" id="t-garantia">Zero risco para você</h2>
+        <p style="margin-top:14px">Você <strong>só paga quando o pedido está nas suas mãos</strong>. Se recusar na entrega, não paga nada.</p>
+        <p>E depois de receber, ainda tem <strong>7 dias para desistir da compra</strong>, como garante o Código de Defesa do Consumidor para compras feitas fora da loja física.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FAIXA DE CTA (quem veio de anúncio) ========== -->
+  <section class="faixa" aria-labelledby="t-faixa">
+    <div class="envelope">
+      <div>
+        <h2 id="t-faixa">Chegou aqui por um anúncio?</h2>
+        <p style="margin-top:10px">Cada produto tem a sua própria página, com foto, preço e formulário de pedido. Volte ao anúncio que você viu e toque nele de novo para abrir a página do produto.</p>
+
+        <!--
+          OFERTAS ATIVAS (recomendado ativar ao escalar tráfego).
+          Listar aqui os links das ofertas que estão rodando torna as
+          páginas de destino alcançáveis pela navegação normal do site,
+          o que reduz o risco de "Circumventing Systems" no Google Ads.
+          Para ativar: descomente o bloco e repita o <li> por oferta.
+
+        <ul class="ofertas" aria-label="Ofertas ativas">
+          <li><a href="/produto-slug">Nome do produto</a></li>
+        </ul>
+        -->
+      </div>
+      <a class="botao botao-linha" href="#contato">Não achei o produto</a>
+    </div>
+  </section>
+
+  <!-- ========== FAQ ========== -->
+  <section class="secao" id="perguntas" aria-labelledby="t-faq">
+    <div class="envelope">
+      <h2 class="secao-titulo" id="t-faq">Perguntas frequentes</h2>
+      <div class="faq">
+        <details>
+          <summary>O que é pagamento na entrega?</summary>
+          <div class="resposta">
+            <p>É uma forma de compra em que você não paga nada ao fazer o pedido. O pagamento é feito no momento em que o produto chega ao seu endereço, diretamente a quem fez a entrega.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Para quais regiões vocês entregam?</summary>
+          <div class="resposta">
+            <p>Enviamos para todo o Brasil. Na confirmação do pedido checamos o seu CEP e informamos o prazo de entrega para a sua região.</p>
+          </div>
+        </details>
+        <details>
+          <summary>E se eu não quiser receber o pedido?</summary>
+          <div class="resposta">
+            <p>Você pode recusar a entrega e não paga nada. Pedimos só que, se possível, avise antes pelo mesmo contato em que confirmamos o pedido.</p>
+            <p>Se já recebeu e pagou, você tem 7 dias a partir do recebimento para desistir da compra, conforme o Art. 49 do Código de Defesa do Consumidor. Veja os detalhes em <a href="/trocas-e-devolucoes">Trocas e Devoluções</a>.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Preciso de cadastro ou cartão de crédito?</summary>
+          <div class="resposta">
+            <p>Não. Para fazer o pedido basta informar nome, telefone e endereço de entrega.</p>
+          </div>
+        </details>
+        <details id="contato">
+          <summary>Como falo com vocês?</summary>
+          <div class="resposta">
+            <!-- Confirmar que esta caixa de e-mail existe e é monitorada antes de publicar. -->
+            <p>Escreva para <a href="mailto:contato@pago-na-entrega.com">contato@pago-na-entrega.com</a>. Se você já fez um pedido, responda também pela mesma conversa em que confirmamos os seus dados.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!--
+  Rodapé: só links legais + nota de arrependimento.
+  NÃO exibir WhatsApp nem CNPJ/razão social (decisão da cliente).
+  Lembrete: o CNPJ continua obrigatório por lei para operar/faturar no
+  Brasil — só não precisa aparecer na página.
+  As três páginas abaixo precisam existir no servidor antes de rodar
+  anúncios (o Google Ads verifica política de privacidade e contato).
+-->
+<footer class="rodape">
+  <div class="envelope">
+    <a class="marca" href="/" aria-label="Pago na Entrega, página inicial">
+      <svg aria-hidden="true"><use href="#carimbo-mini"/></svg>
+      <span>pago na <em>entrega</em></span>
+    </a>
+    <nav aria-label="Informações legais">
+      <a href="/politica-de-privacidade">Política de Privacidade</a>
+      <a href="/termos">Termos de Uso</a>
+      <a href="/trocas-e-devolucoes">Trocas e Devoluções</a>
+    </nav>
+    <small>Você pode desistir da compra em até 7 dias a partir do recebimento do produto, conforme o Art. 49 do Código de Defesa do Consumidor.</small>
+  </div>
+</footer>
+
+</body>
+</html>
