@@ -13,27 +13,28 @@ body{font-family:Montserrat,sans-serif;position:relative;background:var(--cream)
 %(css)s</style></head><body>%(body)s</body></html>"""
 
 def instrutora(w,h):
-    land=w/h>1.5; s=min(w,h)/1200
-    if land:
+    r=w/h; s=min(w,h)/1200
+    if r>1.5:
         css=f"""body{{background:linear-gradient(115deg,var(--deep),var(--wine))}}
-.photo{{position:absolute;right:-10px;bottom:0;height:{h}px}}
-.b1{{width:620px;height:620px;right:-40px;top:20px;background:radial-gradient(circle,#B23A52 0%,transparent 68%)}}
-.txt{{position:absolute;left:64px;top:0;bottom:0;width:640px;display:flex;flex-direction:column;justify-content:center;color:#fff}}
+.photo{{position:absolute;right:0;top:0;width:{h}px;height:{h}px;object-fit:cover}}
+.fade{{position:absolute;right:{h-90}px;top:0;width:90px;height:{h}px;background:linear-gradient(90deg,#5f1625,rgba(95,22,37,0))}}
+.txt{{position:absolute;left:64px;top:0;bottom:0;width:560px;display:flex;flex-direction:column;justify-content:center;color:#fff}}
 .pill{{background:var(--gold);color:var(--deep);font-size:18px;padding:9px 20px;align-self:flex-start;margin-bottom:22px}}
-h1{{font-size:62px;line-height:1.04;font-weight:800}} h1 em{{color:var(--rose)}}
+h1{{font-size:58px;line-height:1.04;font-weight:800}} h1 em{{color:var(--rose)}}
 .ticks{{margin-top:26px;font-size:22px}}.ticks li+li{{margin-top:10px}}
 .sig{{margin-top:26px;font-size:18px;opacity:.85}}"""
     else:
-        ph={1.0:0.64,0.8:0.68,0.5625:0.66}[round(w/h,4) if round(w/h,4) in (1.0,0.8,0.5625) else 0.8]
+        side={1.0:h*0.64,0.8:w*0.8}.get(round(r,2),w*0.86)
+        bot=h*{1.0:0.05,0.8:0.06}.get(round(r,2),0.2)
         css=f"""body{{background:linear-gradient(180deg,var(--deep) 0%,var(--wine) 100%)}}
-.photo{{position:absolute;left:50%;transform:translateX(-50%);bottom:0;height:{h*ph}px}}
-.b1{{width:{w*1.0}px;height:{w*1.0}px;left:{w*0}px;bottom:{h*ph*0.1}px;background:radial-gradient(circle,#B23A52 0%,transparent 66%)}}
-.txt{{position:absolute;left:0;right:0;top:{h*(0.07 if w/h<0.6 else 0.055)}px;text-align:center;color:#fff;padding:0 {60*s}px}}
-.pill{{background:var(--gold);color:var(--deep);font-size:{20*s if w/h>=0.8 else 30*s}px;padding:.5em 1.2em;margin-bottom:{22*s}px}}
-h1{{font-size:{(74 if w/h==1 else 80 if w/h==0.8 else 110)*s}px;line-height:1.04;font-weight:800}} h1 em{{color:var(--rose)}}
-.ticks{{display:flex;justify-content:center;flex-wrap:wrap;gap:{8*s}px {28*s}px;margin-top:{22*s}px;font-size:{(28 if w/h==1 else 32 if w/h>=0.8 else 40)*s}px}}
+.b1{{width:{side*1.5}px;height:{side*1.5}px;left:{(w-side*1.5)/2}px;bottom:{bot-side*0.25}px;background:radial-gradient(circle,rgba(224,176,90,.28) 0%,transparent 62%)}}
+.photo{{position:absolute;left:{(w-side)/2}px;bottom:{bot}px;width:{side}px;height:{side}px;object-fit:cover;border-radius:{32*s}px;border:{6*s}px solid var(--gold);box-shadow:0 {24*s}px {60*s}px rgba(0,0,0,.4)}}
+.txt{{position:absolute;left:0;right:0;top:{h*(0.07 if r<0.6 else 0.05)}px;text-align:center;color:#fff;padding:0 {60*s}px}}
+.pill{{background:var(--gold);color:var(--deep);font-size:{20*s if r>=0.8 else 30*s}px;padding:.5em 1.2em;margin-bottom:{20*s}px}}
+h1{{font-size:{(70 if r==1 else 78 if r>=0.8 else 108)*s}px;line-height:1.04;font-weight:800}} h1 em{{color:var(--rose)}}
+.ticks{{display:flex;justify-content:center;flex-wrap:wrap;gap:{8*s}px {28*s}px;margin-top:{20*s}px;font-size:{(28 if r==1 else 32 if r>=0.8 else 40)*s}px}}
 .sig{{display:none}}"""
-    body="""<div class="blob b1"></div><img class="photo" src="faby.png">
+    body="""<div class="blob b1"></div><img class="photo" src="unhas.jpg"><div class="fade"></div>
 <div class="txt"><span class="pill">100% online</span>
 <h1>Seja uma manicure <em>profissional</em></h1>
 <ul class="ticks"><li>Aulas no seu ritmo</li><li>Certificado incluso</li></ul>
@@ -108,7 +109,7 @@ def limpo(w,h):
     body='<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div><img class="photo" src="faby.png">'
     return css,body
 
-for name,fn in [('01-instrutora',instrutora),('02-bonus',kit),('03-certificado',certificado),('04-limpo-sem-texto',limpo)]:
+for name,fn in [('01-unhas',instrutora),('02-bonus',kit),('03-certificado',certificado),('04-limpo-sem-texto',limpo)]:
     for sz,(w,h) in SIZES.items():
         css,body=fn(w,h)
         open(f'{name}_{sz}.html','w').write(BASE%dict(w=w,h=h,css=css,body=body))

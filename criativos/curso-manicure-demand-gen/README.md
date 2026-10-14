@@ -7,7 +7,7 @@ Página de destino: `https://www.cursomanicure.com/especializacao/?src=aulasmani
 
 | Conceito | Ideia | 1,91:1 (1200×628) | 1:1 (1200×1200) | 4:5 (960×1200) | 9:16 (1080×1920) |
 |---|---|---|---|---|---|
-| 01 Instrutora | Autoridade/rosto da Faby + "Seja uma manicure profissional" | ✅ | ✅ | ✅ | ✅ |
+| 01 Unhas | Resultado (unhas francesinha) + "Seja uma manicure profissional" | ✅ | ✅ | ✅ | ✅ |
 | 02 Bônus | Curso + e-books, apostila, agenda e 30 frases | ✅ | ✅ | ✅ | ✅ |
 | 03 Certificado | Prova tangível: certificado de conclusão | ✅ | ✅ | ✅ | ✅ |
 | 04 Limpo | Foto da instrutora sem texto (máxima aprovação/qualidade) | ✅ | ✅ | ✅ | ✅ |
